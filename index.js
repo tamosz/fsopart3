@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json()) //json-parser needed to fulfill POST requests
+
 let persons = [
   { 
     "id": 1,
@@ -58,6 +60,27 @@ app.delete('/api/persons/:id', (request, response) => {
 
   response.status(204).end()
 })
+
+//generate an id for a new entry using Math.random
+const generateId = () => {
+  return Math.floor(Math.random() * 1000)
+}
+
+//add new person by submitting a POST request
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  const person = {
+    id: generateId(),
+    name: body.name,
+    number: body.number,
+  }
+
+  persons = persons.concat(person)
+
+  response.json(person)
+})
+
 
 const PORT = 3001
 app.listen(PORT, () => {
