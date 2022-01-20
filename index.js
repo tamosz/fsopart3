@@ -24,14 +24,28 @@ let persons = [
   }
 ]
 
+//landing page
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
 
+//fetch all entries
 app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
 
+//fetch a single entry by specifying an id
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const person = persons.find(person => person.id === id)
+  if (person) {
+    response.json(person)
+  } else {
+    response.status(404).end()
+  }
+})
+
+//info page with date and number of persons in phonebook
 app.get('/info', (request, response) => {
   let date = new Date().toUTCString()
   response.send(`<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`)
