@@ -8,6 +8,7 @@ morgan.token('body', req => {
 
 const app = express()
 
+app.use(express.static('build'))
 app.use(cors())
 app.use(morgan('tiny'))
 app.use(express.json()) //json-parser needed to fulfill POST requests
