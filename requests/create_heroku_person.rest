@@ -1,0 +1,7 @@
+POST https://blooming-sierra-43565.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+  "name": "Tomasz McDowell",
+  "number": "123-456-7890"
+}
