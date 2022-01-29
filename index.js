@@ -9,7 +9,9 @@ const app = express()
 
 app.use(morgan('tiny'))
 app.use(express.json()) //json-parser needed to fulfill POST requests
-app.use(morgan(':method :url :body'))
+app.use(morgan(':method :url :body', {
+  skip: function (req, res) { return req.method !== "POST" }
+}))
 
 let persons = [
   { 
