@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 
 morgan.token('body', req => {
   return JSON.stringify(req.body)
@@ -7,9 +8,12 @@ morgan.token('body', req => {
 
 const app = express()
 
+app.use(cors())
 app.use(morgan('tiny'))
 app.use(express.json()) //json-parser needed to fulfill POST requests
-app.use(morgan(':method :url :body'))
+app.use(morgan(':method :url :body', {
+  skip: function (req, res) { return req.method !== "POST" }
+}))
 
 let persons = [
   { 
